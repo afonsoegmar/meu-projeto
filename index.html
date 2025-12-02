@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equação de Segundo Grau - Egmar</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg: #0d0d16;
+      --text: #f0f0ff;
+      --card: #1a1a2e;
+      --accent: #4e8cff;
+    }
+    body.light {
+      --bg: #ffffff;
+      --text: #111;
+      --card: #f2f2f2;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #0005;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: inline-block;
+      width: 100%;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 10px;
+    }
+    label, button, input {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #resultado, #explicacao {
+      margin-top: 15px;
+      padding: 15px;
+      background: #0003;
+      border-radius: 8px;
+    }
+
+    #historico {
+      margin-top: 20px;
+      padding: 10px;
+      background: #0002;
+      border-radius: 8px;
+    }
+
+    canvas {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .switch {
+      cursor: pointer;
+      margin-bottom: 20px;
+      text-align: right;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="switch" onclick="toggleTheme()">🌗 Alternar Tema</div>
+
+    <h1>Equação de Segundo Grau</h1>
+    <p><strong>Desenvolvedor:</strong> Egmar Afonso</p>
+
+    <label>a:</label>
+    <input id="a" type="number" placeholder="Ex.: 1">
+
+    <label>b:</label>
+    <input id="b" type="number" placeholder="Ex.: -3">
+
+    <label>c:</label>
+    <input id="c" type="number" placeholder="Ex.: 2">
+
+    <button onclick="calcular()">Calcular</button>
+    <button onclick="salvarHistorico()">Salvar no Histórico</button>
+    <button onclick="gerarReadme()">Baixar README.txt</button>
+
+    <div id="resultado"></div>
+    <div id="explicacao"></div>
+
+    <canvas id="grafico" width="400" height="250"></canvas>
+
+    <div id="historico"></div>
+
+  </div>
+
+<script>
+let chart;
+
+function calcular() {
+  const a = parseFloat(document.getElementById("a").value);
+  const b = parseFloat(document.getElementById("b").value);
+  const c = parseFloat(document.getElementById("c").value);
+
+  if (isNaN(a) || isNaN(b) || isNaN(c)) {
+    alert("Por favor, insira apenas números.");
+    return;
+  }
+
+  if (a === 0) {
+    alert("O coeficiente 'a' não pode ser zero.");
+    return;
+  }
+
+  const delta = b*b - 4*a*c;
+  let resHTML = `<p>Δ = ${delta}</p>`;
+
+  let explicacao = "";
+  let x1, x2;
+
+  if (delta > 0) {
+    x1 = (-b + Math.sqrt(delta)) / (2*a);
+    x2 = (-b - Math.sqrt(delta)) / (2*a);
+    resHTML += `<p>Duas raízes reais:<br> x1 = ${x1.toFixed(3)}, x2 = ${x2.toFixed(3)}</p>`;
+  }
+  else if (delta === 0) {
+    x1 = -b / (2*a);
+    resHTML += `<p>Uma raiz real: x = ${x1.toFixed(3)}</p>`;
+  }
+  else {
+    const real = (-b / (2*a)).toFixed(3);
+    const imag = (Math.sqrt(-delta) / (2*a)).toFixed(3);
+    resHTML += `<p>Raízes complexas:<br>x1 = ${real} + ${imag}i<br>x2 = ${real} - ${imag}i</p>`;
+    explicacao = "Δ < 0 indica que a parábola não toca o eixo X. As raízes são complexas.";
+  }
+
+  document.getElementById("resultado").innerHTML = resHTML;
+  document.getElementById("explicacao").innerHTML = explicacao;
+
+  desenharGrafico(a, b, c, delta);
+}
+
+function desenharGrafico(a, b, c, delta) {
+  const ctx = document.getElementById("grafico").getContext("2d");
+
+  const x = [];
+  const y = [];
+
+  for (let i = -10; i <= 10; i += 0.1) {
+    x.push(i);
+    y.push(a*i*i + b*i + c);
+  }
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "line",
+    data: { labels: x, datasets: [{ label: "f(x)", data: y, borderWidth: 2 }] },
+    options: { responsive: true, scales: { y: { beginAtZero: false } } }
+  });
+}
+
+function salvarHistorico() {
+  const a = document.getElementById("a").value;
+  const b = document.getElementById("b").value;
+  const c = document.getElementById("c").value;
+
+  let historico = JSON.parse(localStorage.getItem("equacoes")) || [];
+  historico.push({ a, b, c });
+  localStorage.setItem("equacoes", JSON.stringify(historico));
+
+  carregarHistorico();
+}
+
+function carregarHistorico() {
+  const box = document.getElementById("historico");
+  const historico = JSON.parse(localStorage.getItem("equacoes")) || [];
+
+  let html = "<h3>Histórico:</h3>";
+  historico.forEach((item, i) => {
+    html += `<p>${i+1}) a=${item.a}, b=${item.b}, c=${item.c}</p>`;
+  });
+
+  box.innerHTML = html;
+}
+carregarHistorico();
+
+function gerarReadme() {
+  // Agora força o download do README.md existente
+  const link = document.createElement('a');
+  link.href = 'README.md';
+  link.download = 'README.md';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+  const blob = new Blob([texto], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "README.txt";
+  a.click();
+
+
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
