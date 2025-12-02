@@ -1,83 +1,118 @@
-# 📘 Projeto: Calculadora de Equação do Segundo Grau
+📘 Projeto: Equação de Segundo Grau
+Desenvolvedor: Egmar Afonso
+🔗 Acesse o projeto online
 
-Este projeto é uma ferramenta educacional completa para o estudo e
-resolução de **equações do segundo grau** (ax² + bx + c = 0). A
-aplicação conta com validações inteligentes, gráficos, histórico de
-cálculos, modo escuro, entrada por voz e uma interface responsiva.
+👉 https://afonsoegmar.github.io/meu-projeto/
 
-## 📌 Funcionalidades
+📌 Descrição do Projeto
 
-### ✅ Cálculo Completo
+Este é um aplicativo web interativo para cálculo de equações de segundo grau, ideal para fins educacionais e demonstrações matemáticas.
 
--   Entrada dos coeficientes **a**, **b**, **c**.
--   Cálculo automático do **delta (Δ)**.
--   Determinação das **raízes reais ou complexas**.
--   Explicação detalhada quando **Δ \< 0**.
+O projeto permite:
 
-### ⚠️ Validações Inteligentes
+Cálculo de Δ (Delta)
 
--   O coeficiente **a ≠ 0**.
--   Impede valores inválidos ou não numéricos.
--   Exibe alertas amigáveis para erros do usuário.
+Cálculo das raízes reais
 
-### 📊 Gráfico da Parábola (Chart.js)
+Exibição do gráfico da parábola
 
--   Desenho automático da parábola correspondente.
--   Marcação visual das raízes reais no eixo X.
--   Escala ajustável.
+Salvar e visualizar histórico das equações
 
-### 🧾 Histórico de Cálculos
+Alternância entre tema claro e escuro
 
--   Armazena automaticamente (opcional) cada equação resolvida.
--   Mostra coeficientes usados e raízes encontradas.
--   Usa `localStorage` para manter os dados entre sessões.
+🛠️ Tecnologias Utilizadas
 
-### 🎨 Modo Claro / Escuro
+HTML5
 
--   Alternador de tema.
--   Layout adaptado para leitura confortável.
+CSS3
 
-### 🎤 Entrada por Voz (Opcional)
+JavaScript
 
--   Usa Web Speech API.
--   Permite dizer valores como: "a igual a 2, b igual a -3, c igual a
-    5".
+Chart.js (para gráficos, se aplicável)
 
-### 📱 Totalmente Responsivo
+📂 Arquivos Principais
 
--   Interface adaptada para celular, tablet e PC.
--   Layout reorganizado com media queries.
+index.html → Estrutura da página
 
-## 🛠️ Tecnologias Utilizadas
+style.css → Estilos
 
--   **HTML5**
--   **CSS3**
--   **JavaScript ES6**
--   **Chart.js**
--   **Web Speech API**
--   **localStorage**
+script.js → Lógica e funções
 
-## 📥 Como Usar
+README.md → Documentação
 
-1.  Abra o arquivo `index.html` no navegador.
-2.  Insira os coeficientes **a**, **b**, **c**.
-3.  Clique em **Calcular**.
-4.  Veja resultados, análise do delta e gráfico.
-5.  Salve no histórico se desejar.
-6.  Use o botão de tema.
-7.  Teste a entrada por voz.
+🚀 Funcionalidades
 
-## 📂 Estrutura Recomendada
+✔ Campo para inserir valores de a, b, c
+✔ Cálculo automático do Delta
+✔ Identificação do tipo de raízes
+✔ Exibição do gráfico da equação
+✔ Registro de histórico com opção de limpar
+✔ Tema claro/escuro para melhor visualização
+✔ Download do README
 
-    📁 equacao-2-grau
-     ├── index.html
-     ├── style.css
-     ├── script.js
-     ├── README.md
-     └── /assets
-          └── chart.min.js
+🧮 Cálculo Usado
 
-## 👨‍💻 Desenvolvedor
+A equação de segundo grau segue o modelo:
 
-**Egmar Afonso**\
-"Perseverança e simplicidade me guiam em cada projeto."
+𝑎
+𝑥
+2
++
+𝑏
+𝑥
++
+𝑐
+=
+0
+ax
+2
++bx+c=0
+
+E o cálculo das raízes utiliza:
+
+Δ
+=
+𝑏
+2
+−
+4
+𝑎
+𝑐
+Δ=b
+2
+−4ac
+𝑥
+=
+−
+𝑏
+±
+Δ
+2
+𝑎
+x=
+2a
+−b±
+Δ
+	​
+
+	​
+
+📱 Responsividade
+
+O projeto funciona em:
+
+Desktop
+
+Tablets
+
+Smartphones
+
+📜 Licença
+
+Este projeto pode ser utilizado livremente para estudo ou aprimoramento pessoal.
+
+👤 Autor
+
+Egmar Afonso
+Engenharia de Computação
+Tecnologia da Informação • IoT • Web • IA
